@@ -30,17 +30,21 @@ jobs:
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           echo "npm version : $(npm --version)"
-          echo "which npm   : $(command -v npm)"
           echo "node version: $(node --version)"
-          echo "id-token URL present  : ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}"
-          echo "id-token TOKEN present : ${ACTIONS_ID_TOKEN_REQUEST_TOKEN:+yes}"
+          RESP=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL")
+          echo "$RESP" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const jwt=JSON.parse(d).value;const p=JSON.parse(Buffer.from(jwt.split('.')[1],'base64url'));console.log('--- OIDC claims npm matches against ---');console.log(JSON.stringify({repository:p.repository,repository_owner:p.repository_owner,workflow_ref:p.workflow_ref,job_workflow_ref:p.job_workflow_ref,ref:p.ref,environment:p.environment??'(none)'},null,2));})"
       - name: Publish to npm
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           CURRENT=$(node -p "require('./package.json').version")
           PUBLISHED=$(npm view @viz-cx/api version 2>/dev/null || echo "none")
           if [ "$CURRENT" != "$PUBLISHED" ]; then
-            npm publish --access public --provenance
+            set +e
+            npm publish --access public --provenance --loglevel verbose > /tmp/pub.log 2>&1
+            CODE=$?
+            echo "--- filtered publish log ---"
+            grep -iE 'oidc|trusted|provenance|exchange|authenticat|need auth|ENEEDAUTH|http fetch|npm error' /tmp/pub.log || true
+            exit $CODE
           else
             echo "Version $CURRENT already on npm, skipping"
           fi
