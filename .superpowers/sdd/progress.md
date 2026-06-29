@@ -14,3 +14,6 @@ Repo: /Users/babin/Develop/VIZ/ts-api
   task-1-report.md for full repro). `attw` correctly flags
   `@viz-cx/api/core-signer` as `node10: Resolution failed` — expected per the
   brief since core-signer is an empty placeholder until Task 7.
+Task 1: complete (commits 4b825dc..4dc428e, review clean)
+  Minor: pnpm lockfile is pnpm11 format — verify compat with pnpm 10.34.4 in CI (Task 12)
+  Minor: README.md referenced in files[] but absent — expected, Task 12 adds it
