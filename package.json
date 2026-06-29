@@ -1,33 +1,55 @@
 {
   "name": "@viz-cx/api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Type-safe TypeScript SDK for the VIZ site API (api.viz.cx): blocks, profiles, richlist, signed webhooks, and the live op WebSocket.",
-  "keywords": ["viz", "viz-blockchain", "blockchain", "typescript", "sdk", "api"],
+  "keywords": [
+    "viz",
+    "viz-blockchain",
+    "blockchain",
+    "typescript",
+    "sdk",
+    "api"
+  ],
   "homepage": "https://github.com/viz-cx/ts-api#readme",
   "bugs": "https://github.com/viz-cx/ts-api/issues",
   "license": "MIT",
   "author": "babin@axveer.com",
-  "repository": { "type": "git", "url": "git+https://github.com/viz-cx/ts-api.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viz-cx/ts-api.git"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": { "import": "./dist/index.d.ts", "require": "./dist/index.d.cts" },
+      "types": {
+        "import": "./dist/index.d.ts",
+        "require": "./dist/index.d.cts"
+      },
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./core-signer": {
-      "types": { "import": "./dist/core-signer.d.ts", "require": "./dist/core-signer.d.cts" },
+      "types": {
+        "import": "./dist/core-signer.d.ts",
+        "require": "./dist/core-signer.d.cts"
+      },
       "import": "./dist/core-signer.js",
       "require": "./dist/core-signer.cjs"
     },
     "./package.json": "./package.json"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "sideEffects": false,
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf dist .pack-tmp coverage",
@@ -46,8 +68,14 @@
     "prepublishOnly": "pnpm clean && pnpm build && pnpm lint:types && pnpm test && pnpm test:types && pnpm lint:exports && pnpm drift && pnpm size",
     "release": "changeset publish"
   },
-  "peerDependencies": { "@viz-cx/core": "^0.6.1" },
-  "peerDependenciesMeta": { "@viz-cx/core": { "optional": true } },
+  "peerDependencies": {
+    "@viz-cx/core": "^0.6.1"
+  },
+  "peerDependenciesMeta": {
+    "@viz-cx/core": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.4",
     "@changesets/cli": "^2.27.7",
@@ -62,6 +90,10 @@
     "typescript": "^5.4.5",
     "vitest": "^3.2.6"
   },
-  "publishConfig": { "access": "public" },
-  "tsd": { "directory": "test/types" }
+  "publishConfig": {
+    "access": "public"
+  },
+  "tsd": {
+    "directory": "test/types"
+  }
 }
