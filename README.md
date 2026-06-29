@@ -28,10 +28,10 @@ const profile = await client.getProfile('alice');
 console.log(profile?.balance);
 
 const richlist = await client.getRichlist();
-console.log(richlist?.accounts.length); // 200
+console.log(richlist?.accounts.length); // full snapshot (~14k accounts)
 
 const block = await client.getBlock(81_000_000);
-console.log(block?.transactions.length);
+console.log(block?.block.length);
 ```
 
 ## Auth
@@ -50,7 +50,7 @@ const mySign: SignFn = (nonceBytes) => {
 };
 
 const client = createApiClient({
-  signer: { account: 'alice', sign: mySign },
+  auth: { account: 'alice', sign: mySign },
 });
 ```
 
@@ -63,7 +63,7 @@ import { createApiClient } from '@viz-cx/api';
 import { withCoreSigner } from '@viz-cx/api/core-signer';
 
 const client = createApiClient({
-  signer: withCoreSigner('alice', '5J...privateKey'),
+  auth: withCoreSigner('alice', '5J...privateKey'),
 });
 ```
 
@@ -71,14 +71,14 @@ const client = createApiClient({
 
 ## Webhooks CRUD
 
-Webhooks require auth. Pass a `signer` in client options or per-call.
+Webhooks require auth. Pass an `auth` signer in client options or per-call.
 
 ```ts
 import { createApiClient } from '@viz-cx/api';
 import { withCoreSigner } from '@viz-cx/api/core-signer';
 
 const client = createApiClient({
-  signer: withCoreSigner('alice', '5J...privateKey'),
+  auth: withCoreSigner('alice', '5J...privateKey'),
 });
 
 // Create a webhook (filter is optional)
@@ -106,7 +106,7 @@ await client.webhooks.delete(created.id);
 const stream = client.streamOps({ opType: 'award' });
 
 const unsub = stream.on((msg) => {
-  console.log(msg.op_type, msg.op);
+  console.log(msg.opType, msg.body);
 });
 
 stream.onStatus((s) => console.log('status:', s)); // 'open' | 'reconnecting' | 'closed'
@@ -121,7 +121,7 @@ stream.close();
 ```ts
 const stream = client.streamOps();
 for await (const msg of stream) {
-  console.log(msg.op_type, msg.op);
+  console.log(msg.opType, msg.body);
   if (someCondition) break; // break calls stream.close() automatically
 }
 ```
@@ -163,9 +163,9 @@ interface ApiClient {
 
 ```ts
 createApiClient({
-  apiBase?: string;        // default: 'https://api.viz.cx'
-  wsUrl?: string;          // default: 'wss://api.viz.cx/ops'
-  signer?: Signer;         // default signer for authed calls
+  baseUrl?: string;        // default: 'https://api.viz.cx'
+  wsUrl?: string;          // default: 'wss://api.viz.cx/ws/ops'
+  auth?: Signer;           // default signer for authed calls
   WebSocket?: WebSocketCtor; // WebSocket constructor (Node.js injection)
   fetch?: typeof fetch;    // custom fetch implementation
 })
