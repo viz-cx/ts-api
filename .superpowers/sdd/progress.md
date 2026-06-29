@@ -17,3 +17,4 @@ Repo: /Users/babin/Develop/VIZ/ts-api
 Task 1: complete (commits 4b825dc..4dc428e, review clean)
   Minor: pnpm lockfile is pnpm11 format — verify compat with pnpm 10.34.4 in CI (Task 12)
   Minor: README.md referenced in files[] but absent — expected, Task 12 adds it
+Task 2: complete (commits 4dc428e..7f082fb, review clean)
