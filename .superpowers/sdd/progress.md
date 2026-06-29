@@ -31,3 +31,23 @@ Task 8: complete (commits 71117b6..bac60b6, review clean)
   Minor: onerror → reconnecting status only; no distinct error vs clean-close discrimination
 Task 9: complete (commits bac60b6..HEAD, review clean) — createApiClient assembles rest/auth/webhooks/streamOps; src/index.ts finalized as full public surface
   Minor: attw flags @viz-cx/api/core-signer node10 Resolution failed — pre-existing since Task 7, not a Task 9 regression (verified via git stash diff)
+Task 9: complete (commits bac60b6..efe02ca, review clean)
+Task 10: complete (commits efe02ca..6f73688, review clean)
+Task 11: complete (commits 6f73688..609d842, review clean)
+  Minor: snapshot is minified — fine for now, could be formatted for better diffs
+Task 12: complete (commits 609d842..d6fc077, review minor fixed)
+  Fixed: added --ignore-rules no-resolution rationale to AGENTS.md Gotchas
+  Note: pnpm lockfile is pnpm11 format — verify when CI is live with pnpm 10.34.4
+Task 13: complete (commits d6fc077..c234c82, review clean)
+  NOTE: webhook signing round-trip SKIPPED — no VIZ_TEST_ACCOUNT/VIZ_TEST_WIF provided
+  Run: VIZ_TEST_ACCOUNT=<acct> VIZ_TEST_WIF=<wif> pnpm test:integration to execute the gate
+Final review: complete (commits c234c82..776623a)
+  Fixed Critical: README signer→auth (3 places), apiBase→baseUrl, ws URL /ops→/ws/ops
+  Fixed Important: msg.op_type→msg.opType, msg.op→msg.body, transactions→block, misleading richlist comment
+  Deferred Minors: ws ref not nulled, empty-string filter truthy-check, fetchNonce asymmetry, snapshot minified
+  OPEN: webhook signing round-trip not yet run (needs VIZ_TEST_ACCOUNT + VIZ_TEST_WIF)
+  OPEN: Task 14 (web dogfood) pending
+Task 14: complete (commits 6dc1908..75d508f in viz.cx repo, review clean)
+  Minor UX: reconnect no longer cycles 'connecting'→'down'; stays 'down' (SDK emits 'reconnecting' only)
+  Follow-up: actions.test.ts has 17 pre-existing failures (createHttpTransport mock needs {call,broadcast})
+  OPEN: webhook signing round-trip still unrun (needs VIZ_TEST_ACCOUNT + VIZ_TEST_WIF)
