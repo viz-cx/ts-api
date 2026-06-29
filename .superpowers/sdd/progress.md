@@ -19,3 +19,4 @@ Task 1: complete (commits 4b825dc..4dc428e, review clean)
   Minor: README.md referenced in files[] but absent — expected, Task 12 adds it
 Task 2: complete (commits 4dc428e..7f082fb, review clean)
 Task 3: complete (commits 7f082fb..80c56c3, review clean)
+Task 4: complete (commits 80c56c3..b5fe870, review clean)
