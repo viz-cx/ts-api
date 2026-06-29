@@ -74,3 +74,4 @@ test/
 - `pnpm smoke` requires a live network connection to `api.viz.cx` — it is not run in offline/isolated environments.
 - `pnpm drift` fetches the live OpenAPI spec from `api.viz.cx/openapi.json` — same network requirement.
 - The pnpm lockfile is in pnpm 11 format locally (pnpm 11.2.2); CI pins pnpm 10.34.4. If CI lockfile compatibility breaks, regenerate with `pnpm install --lockfile-only` under pnpm 10.
+- `pnpm lint:exports` uses `--ignore-rules no-resolution` because `node10` TypeScript resolution predates `exports` maps and cannot resolve subpath exports (like `./core-signer`) by definition. The `node16` and `bundler` resolution modes are fully checked and green. Remove the flag only if you also remove all subpath exports.
