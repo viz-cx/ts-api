@@ -23,9 +23,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - uses: changesets/action@v1
+        id: changesets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to npm
+        if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           CURRENT=$(node -p "require('./package.json').version")
           PUBLISHED=$(npm view @viz-cx/api version 2>/dev/null || echo "none")
