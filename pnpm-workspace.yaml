@@ -1,0 +1,10 @@
+allowBuilds:
+  esbuild: true
+overrides:
+  # Pin to work around an upstream bug: @arethetypeswrong/core@0.15.1's
+  # gzip/untar path breaks under fflate@0.8.3 (data[0] undefined in
+  # extractTarball), crashing `pnpm lint:exports`. 0.8.2 is known-good
+  # (see https://github.com/101arrowz/fflate/issues/207, referenced in
+  # the upstream source). Remove once @arethetypeswrong/core bumps past
+  # this incompatibility.
+  fflate: 0.8.2
