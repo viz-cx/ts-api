@@ -24,3 +24,10 @@ Task 5: complete (commits b5fe870..90da77e, review clean)
   Minor: fetchNonce non-2xx → VizApiHttpError, not VizApiAuthError (plan-mandated, untested path)
 Task 6: complete (commit 6c30c34) — webhooks CRUD with camel↔snake wire conversion
 Task 6: complete (commits 90da77e..6c30c34, review clean)
+Task 7: complete (commits 6c30c34..71117b6, review clean)
+Task 8: complete (commits 71117b6..bac60b6, review clean)
+  Minor: ws ref not nulled after close() (cosmetic, stopped flag guards all behavior)
+  Minor: empty-string filter values dropped (truthy check, matches brief/tests)
+  Minor: onerror → reconnecting status only; no distinct error vs clean-close discrimination
+Task 9: complete (commits bac60b6..HEAD, review clean) — createApiClient assembles rest/auth/webhooks/streamOps; src/index.ts finalized as full public surface
+  Minor: attw flags @viz-cx/api/core-signer node10 Resolution failed — pre-existing since Task 7, not a Task 9 regression (verified via git stash diff)
