@@ -22,3 +22,5 @@ Task 3: complete (commits 7f082fb..80c56c3, review clean)
 Task 4: complete (commits 80c56c3..b5fe870, review clean)
 Task 5: complete (commits b5fe870..90da77e, review clean)
   Minor: fetchNonce non-2xx → VizApiHttpError, not VizApiAuthError (plan-mandated, untested path)
+Task 6: complete (commit 6c30c34) — webhooks CRUD with camel↔snake wire conversion
+Task 6: complete (commits 90da77e..6c30c34, review clean)
