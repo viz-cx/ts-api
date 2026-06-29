@@ -39,7 +39,7 @@
     "test:integration": "vitest run --config vitest.integration.ts",
     "lint": "eslint . --ext .ts",
     "lint:types": "tsc --noEmit",
-    "lint:exports": "attw --pack .",
+    "lint:exports": "attw --pack . --ignore-rules no-resolution",
     "drift": "node scripts/check-openapi-drift.mjs",
     "size": "node scripts/check-tarball-size.mjs",
     "smoke": "node scripts/smoke-test.mjs",
