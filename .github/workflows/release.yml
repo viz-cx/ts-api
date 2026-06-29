@@ -26,6 +26,14 @@ jobs:
         id: changesets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: OIDC diagnostics
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          echo "npm version : $(npm --version)"
+          echo "which npm   : $(command -v npm)"
+          echo "node version: $(node --version)"
+          echo "id-token URL present  : ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}"
+          echo "id-token TOKEN present : ${ACTIONS_ID_TOKEN_REQUEST_TOKEN:+yes}"
       - name: Publish to npm
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
