@@ -1,6 +1,6 @@
 {
   "name": "@viz-cx/api",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Type-safe TypeScript SDK for the VIZ site API (api.viz.cx): blocks, profiles, richlist, signed webhooks, and the live op WebSocket.",
   "keywords": [
     "viz",
