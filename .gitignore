@@ -1,5 +1,6 @@
 node_modules/
 dist/
+src/version.ts
 coverage/
 .pack-tmp/
 *.tgz

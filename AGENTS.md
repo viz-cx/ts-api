@@ -39,9 +39,10 @@ src/
   types.ts          RawOp, OpRecord, BlockDoc, ChainInfo, RichlistRow, Richlist, Profile,
                     WebhookFilter, WebhookCreated, WebhookRow, OpStreamMessage, SignFn, Signer
   core-signer.ts    withCoreSigner() — wraps @viz-cx/core keys.sign (optional peer dep)
-  version.ts        VERSION constant (re-exported)
+  version.ts        VERSION constant (re-exported) — GENERATED, gitignored (see scripts/gen-version.mjs)
 
 scripts/
+  gen-version.mjs           writes src/version.ts from package.json (runs on prepare + build)
   check-openapi-drift.mjs   fetches live OpenAPI spec, diffs against src/types.ts
   check-tarball-size.mjs    pnpm pack → asserts size < 50 KB
   smoke-test.mjs            live read against api.viz.cx (requires network)
@@ -60,6 +61,7 @@ test/
 - **WebSocket is injectable.** `createApiClient({ WebSocket })` accepts any constructor compatible with the browser `WebSocket` interface. Node.js users inject `ws` this way; browser users rely on the global.
 - **`streamOps` is an `AsyncIterable`.** Breaking the `for await` loop automatically calls `stream.close()` via the iterator's `return()` method. Don't remove that hook.
 - **`@viz-cx/core` is a peer dep, not a direct dep.** The `./core-signer` subpath imports from `@viz-cx/core`. This import must never appear anywhere else in the source tree.
+- **`src/version.ts` is generated, never hand-edited.** `scripts/gen-version.mjs` writes it from `package.json`'s `version`; it is gitignored and regenerated on `prepare` (post-install) and `build`. To change the version, bump `package.json` (via Changesets) — never edit `version.ts` directly.
 
 ## Release process
 

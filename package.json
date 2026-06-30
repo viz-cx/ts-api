@@ -13,7 +13,7 @@
   "homepage": "https://github.com/viz-cx/ts-api#readme",
   "bugs": "https://github.com/viz-cx/ts-api/issues",
   "license": "MIT",
-  "author": "babin@axveer.com",
+  "author": "vovababin@gmail.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/viz-cx/ts-api.git"
@@ -51,7 +51,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "node scripts/gen-version.mjs && tsup",
+    "prepare": "node scripts/gen-version.mjs",
     "clean": "rm -rf dist .pack-tmp coverage",
     "dev": "tsup --watch",
     "test": "vitest run",
