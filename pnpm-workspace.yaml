@@ -1,5 +1,7 @@
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@viz-cx/core@0.7.0'
 overrides:
   # Pin to work around an upstream bug: @arethetypeswrong/core@0.15.1's
   # gzip/untar path breaks under fflate@0.8.3 (data[0] undefined in
