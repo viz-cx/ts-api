@@ -23,6 +23,10 @@ export interface ChainInfo {
   head_block_number?: number;
   head_block_id?: string;
   time?: string;
+  current_validator?: string;
+  /** @deprecated Renamed to {@link ChainInfo.current_validator} in the
+   * viz-cpp-node witness→validator migration. The API now emits
+   * `current_validator`; this alias is kept only for older nodes. */
   current_witness?: string;
   current_supply?: string;
   total_vesting_fund?: string;
@@ -66,7 +70,13 @@ export interface Profile {
   last_vote_time?: string;
   created?: string;
   proxy?: string;
+  validator_votes?: string[];
+  validators_voted_for?: number;
+  /** @deprecated Renamed to {@link Profile.validator_votes} in the
+   * witness→validator migration. Kept for older nodes/snapshots. */
   witness_votes?: string[];
+  /** @deprecated Renamed to {@link Profile.validators_voted_for} in the
+   * witness→validator migration. Kept for older nodes/snapshots. */
   witnesses_voted_for?: number;
   json_metadata: { profile?: { avatar?: string; name?: string; about?: string; [k: string]: unknown } } & Record<
     string,
