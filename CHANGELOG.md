@@ -1,5 +1,16 @@
 # @viz-cx/api
 
+## 0.1.4
+
+### Patch Changes
+
+- f75d54d: Fix read-path types for the viz-cpp-node witness→validator migration. The
+  site API now emits `current_validator` (was `current_witness`) on `GET /`,
+  and `validators_voted_for` / `validator_votes` (were `witnesses_voted_for` /
+  `witness_votes`) on `GET /profile/{user}`. The new field names are now the
+  primary types; the old names are retained as `@deprecated` aliases for
+  consumers still reading from older nodes.
+
 ## 0.1.3
 
 ### Patch Changes
