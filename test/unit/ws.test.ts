@@ -13,7 +13,8 @@ class FakeWebSocket {
   closed = false;
   constructor(url: string) { this.url = url; FakeWebSocket.last = this; }
   close() { this.closed = true; this.onclose?.(); }
-  emit(msg: OpStreamMessage) { this.onmessage?.({ data: JSON.stringify(msg) }); }
+  /** Emits what the server actually sends: snake_case wire JSON. */
+  emit(msg: Record<string, unknown>) { this.onmessage?.({ data: JSON.stringify(msg) }); }
 }
 
 function streamFactory() {
@@ -24,6 +25,8 @@ function streamFactory() {
   return createStreamOps(opts);
 }
 
+// Wire shape (server's _serialize) vs what handlers must receive.
+const WIRE = { op_id: '1', timestamp: 't', op_type: 'transfer', body: { from: 'a' } };
 const SAMPLE: OpStreamMessage = { opId: '1', timestamp: 't', opType: 'transfer', body: { from: 'a' } };
 
 describe('streamOps', () => {
@@ -38,7 +41,7 @@ describe('streamOps', () => {
     const got: OpStreamMessage[] = [];
     s.on((m) => got.push(m));
     FakeWebSocket.last!.onopen?.();
-    FakeWebSocket.last!.emit(SAMPLE);
+    FakeWebSocket.last!.emit(WIRE);
     expect(got).toEqual([SAMPLE]);
     s.close();
   });
@@ -48,7 +51,7 @@ describe('streamOps', () => {
     const fn = vi.fn();
     s.on(fn);
     s.off(fn);
-    FakeWebSocket.last!.emit(SAMPLE);
+    FakeWebSocket.last!.emit(WIRE);
     expect(fn).not.toHaveBeenCalled();
     s.close();
   });
@@ -68,7 +71,7 @@ describe('streamOps', () => {
     FakeWebSocket.last!.onopen?.();
     const it = s[Symbol.asyncIterator]();
     const p = it.next();
-    FakeWebSocket.last!.emit(SAMPLE);
+    FakeWebSocket.last!.emit(WIRE);
     const { value } = await p;
     expect(value).toEqual(SAMPLE);
     s.close();

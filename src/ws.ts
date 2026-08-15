@@ -21,6 +21,17 @@ function buildUrl(wsUrl: string, filter?: WebhookFilter): string {
   return qs ? `${wsUrl}?${qs}` : wsUrl;
 }
 
+/** The server's _serialize emits snake_case ({op_id, op_type}); public types
+ * are camelCase. Translate at the wire boundary, like webhooks.ts does. */
+function fromWire(raw: Record<string, unknown>): OpStreamMessage {
+  return {
+    opId: (raw.op_id ?? null) as string | null,
+    timestamp: (raw.timestamp ?? null) as string | null,
+    opType: (raw.op_type ?? null) as string | null,
+    body: (raw.body ?? {}) as Record<string, unknown>,
+  };
+}
+
 export function createStreamOps(opts: NormalizedApiOptions) {
   return function streamOps(filter?: WebhookFilter): OpStream {
     const maybeCtor: WebSocketCtor | undefined =
@@ -54,7 +65,7 @@ export function createStreamOps(opts: NormalizedApiOptions) {
       ws = new Ctor(url);
       ws.onopen = () => { backoff = BACKOFF_BASE; emitStatus('open'); };
       ws.onmessage = (ev: MessageEvent) => {
-        try { deliver(JSON.parse(String(ev.data)) as OpStreamMessage); } catch { /* drop malformed */ }
+        try { deliver(fromWire(JSON.parse(String(ev.data)))); } catch { /* drop malformed */ }
       };
       ws.onclose = () => {
         if (stopped) return;
